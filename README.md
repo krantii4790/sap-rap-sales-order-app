@@ -322,14 +322,12 @@ Create the objects in this order and copy the source from the `src/` folder:
 
 ## 👤 Author
 
-**[Your Name]**
+**Krantikumar Patil**
 
-- LinkedIn: [linkedin.com/in/your-profile](https://www.linkedin.com/in/your-profile)
-- GitHub: [@your-username](https://github.com/your-username)
+- LinkedIn: ([Linkedin.com](https://www.linkedin.com/in/krantikumarpatil4211/))
+- GitHub: ([Github.com](https://github.com/krantii4790)
 
-Built as **Day 90 of the #90DaysChallenge** on learning SAP RAP. Thank you to everyone who followed along. 🙏
-
-If this repo helps you, please ⭐ it and share your feedback.
+Built as **Day 90 of the #90DaysChallenge** on learning SAP RAP. 
 
 ---
 
