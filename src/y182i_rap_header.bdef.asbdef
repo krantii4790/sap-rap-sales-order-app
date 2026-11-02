@@ -1,0 +1,96 @@
+managed implementation in class zbp_182i_rap_header unique;
+strict ( 2 );
+with draft;    //enables the draft runtime engine
+
+define behavior for Y182I_RAP_HEADER
+persistent table y182DBT_header
+draft table y182DBT_header_d
+lock master
+total etag LocalLastChangedAt
+authorization master ( instance )
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) SoId;
+
+  association _Item { create; with draft; }
+
+// standard draft lifecycle actions (Edit, Resume, Discard, Activate optimized)
+//Edit: Copies an existing record from the active table into the draft table to safely begin modifications.
+// Resume: Reloads an existing uncommitted draft so a user can continue working where they left off.
+// Discard: Deletes the temporary draft record and all uncommitted changes, reverting back to the last active version.
+// Activate optimized: Validates and finalizes the transaction, moving data from the draft tables to the permanent active database tables.
+
+  draft action Edit;
+  draft action Resume;
+  draft action Activate optimized;
+  draft action Discard;
+
+//  Include the validation in the prepare action
+  draft determine action Prepare
+  {
+    validation validateCustomer;
+  }
+
+  mapping for y182DBT_header
+  {
+    SoId               = so_id;
+    SoNumber           = so_number;
+    Customer           = customer;
+    OrderDate          = order_date;
+    Status             = status;
+    Currency           = currency;
+    Unit               = unit;
+    UnitPrice          = unit_price;
+    Quantity           = quantity;
+    TotalAmt           = total_amount;
+    CreatedBy          = created_by;
+    CreatedAt          = created_at;
+    LastChangedBy      = last_changed_by;
+    LastChangedAt      = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+
+  validation validateCustomer on save { field Customer; create; update; }
+
+  determination calculateTotalAmt on modify { field Quantity, UnitPrice; }
+
+  side effects { field Currency affects field TotalAmt;
+                 field UnitPrice affects field TotalAmt; }
+
+//  action ApprovedStatus result[1] $self;
+   action ApprovedStatus parameter Y182_SO_POPUP result [1] $self;
+   factory action copyCustomer [1];
+
+
+
+}
+
+define behavior for Y182I_RAP_ITEM
+persistent table y182DBT_item
+draft table y182DBT_item_d
+lock dependent by _HEADER
+authorization dependent by _HEADER
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) ItemId;
+  field ( readonly ) SoId;
+
+  association _HEADER { with draft; }
+
+  mapping for y182DBT_item
+  {
+    ItemId        = item_id;
+    SoId          = so_id;
+    ItemNumber    = item_number;
+    Material      = material;
+    Unit          = unit;
+    Quantity      = quantity;
+    NetPrice      = net_price;
+    LastChangedAt = last_changed_at;
+  }
+}

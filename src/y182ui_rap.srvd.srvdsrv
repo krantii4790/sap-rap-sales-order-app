@@ -1,0 +1,5 @@
+@EndUserText.label: 'Sales Order RAP Service Definition'
+define service Y182UI_RAP {
+  expose Y182C_RAP_HEADER;
+  expose Y182C_RAP_ITEM;
+}
