@@ -325,16 +325,8 @@ Create the objects in this order and copy the source from the `src/` folder:
 **Krantikumar Patil**
 
 - LinkedIn: ([Linkedin.com](https://www.linkedin.com/in/krantikumarpatil4211/))
-- GitHub: ([Github.com](https://github.com/krantii4790)
+- GitHub: ([Github.com](https://github.com/krantii4790))
 
 Built as **Day 90 of the #90DaysChallenge** on learning SAP RAP. 
 
 ---
-
-## 📄 License
-
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
-
----
-
-**Tags:** `sap` `abap` `rap` `abap-cloud` `sap-btp` `odata-v4` `fiori-elements` `cds` `abapgit` `90-days-challenge`
